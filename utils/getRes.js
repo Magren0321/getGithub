@@ -4,11 +4,22 @@ async function getData(name){
     const browser = await (puppeteer.launch({
         //如果是访问https页面 此属性会忽略https错误
         ignoreHTTPSErrors: true,
-        headless: true
+        headless: false //改为true则不会显示浏览器
     }));
     const page = await browser.newPage();
     await page.goto('https://github.com/'+name);
-    const yearList =  await page.evaluate(()=>{
+    const list =  await page.evaluate(()=>{
+        
+        //获取followers数
+        const div = document.querySelectorAll('.mb-3 > a');
+        const reg = /followers/ //正则表达式，取有followers的字符串
+        let followers = undefined;
+        for(let i of div){
+            if(reg.test(i.href)){
+                followers = i.querySelector('span').outerText;
+            }
+        }
+
         //获取年份，以及对应contributions的url
         const year  = document.querySelectorAll(".filter-list > li > a");
         const yearlist = Array.prototype.map.call(year, (item) => {
@@ -17,11 +28,15 @@ async function getData(name){
                 href: item.href
             }
         });
-        return yearlist;
+
+        return {
+            yearList: yearlist,
+            followers: followers
+        };
     })
     //获取每一年里每天的contributions情况
     const dateList = [];
-    for(let i of yearList){
+    for(let i of list.yearList){
         let date;
         await getDateList(i.href,browser).then(res=>{date = res});
         dateList.push({
@@ -29,12 +44,15 @@ async function getData(name){
             date: date
         });
     }
-   const repList = await toRepositories(name,browser)
-    // browser.close();
+
+    const repList = await toRepositories(name,browser)
+
+    browser.close();
 
     return {
         dateList:dateList,
-        repList:repList
+        repList:repList,
+        followers:list.followers
     };
 }
 //获取日期以及当天的提交数
@@ -55,6 +73,7 @@ async function getDateList(yearData,browser){
       
         return datelist;
     })
+    await page.close()
     return dateList;
 }
 
@@ -92,8 +111,9 @@ async function toRepositories(name,browser){
         dataList.push(await getRepositoriesInfo(i,browser));
     }
 
-    return dataList;
+    await page.close()
 
+    return dataList;
 }
 
 
@@ -135,6 +155,9 @@ async function getRepositoriesInfo(url,browser){
         }
     })
     dataList.url = url;
+
+    await page.close()
+
     return dataList;
 }
 
