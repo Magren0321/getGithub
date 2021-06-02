@@ -2,9 +2,10 @@ import puppeteer from 'puppeteer';
 
 async function getData(name){
     const browser = await (puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
         //如果是访问https页面 此属性会忽略https错误
         ignoreHTTPSErrors: true,
-        headless: false //改为true则不会显示浏览器
+        headless: true //改为true则不会显示浏览器
     }));
     const page = await browser.newPage();
     await page.goto('https://github.com/'+name);
