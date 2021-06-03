@@ -2,7 +2,11 @@ import puppeteer from 'puppeteer';
 
 async function getData(name){
     const browser = await (puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        args: ['--no-sandbox', 
+        '--disable-setuid-sandbox',
+        '–disable-gpu',
+        '–single-process',
+        '–no-first-run'],
         //如果是访问https页面 此属性会忽略https错误
         ignoreHTTPSErrors: true,
         headless: true //改为true则不会显示浏览器
@@ -84,17 +88,17 @@ async function toRepositories(name,browser){
     await page.goto('https://github.com/'+name+'?tab=repositories');
     let repositoriesUrl = [];
     let nextUrl = undefined;
-
+    
     let rep = await getRep(page);
-
+    
     if(rep.urlList!=undefined){
         for(let i of rep.urlList){
             repositoriesUrl.push(i);
         }
     }
-
+    
     nextUrl = rep.nextUrl;
-
+    
     while(nextUrl!=undefined){
         await page.goto(nextUrl);
         rep = await getRep(page);
@@ -103,18 +107,18 @@ async function toRepositories(name,browser){
                 repositoriesUrl.push(i);
             }
         }
-
+    
         nextUrl = rep.nextUrl;
     }
-    
+        
     let dataList = [];
     for(let i of repositoriesUrl){
         dataList.push(await getRepositoriesInfo(i,browser));
     }
-
+    
     await page.close()
-
-    return dataList;
+    
+    return dataList
 }
 
 
