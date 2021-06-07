@@ -21,7 +21,8 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "puppeteer": "^9.1.1"
+    "puppeteer": "^9.1.1",
+    "save": "^2.4.0"
   },
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "^6.24.1",

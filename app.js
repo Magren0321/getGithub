@@ -2,7 +2,9 @@ import createError from 'http-errors';
 import express from 'express';
 import router from './routes/index'
 
+
 var app = express();
+
 
 app.all('*', (req, res, next) => {
   const { origin, Origin, referer, Referer } = req.headers;
@@ -20,7 +22,6 @@ app.all('*', (req, res, next) => {
 });
 
 router(app);
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

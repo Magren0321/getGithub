@@ -1,5 +1,5 @@
 import express from 'express';
-import getRes from '../utils/getRes';
+import getRes from '../module/getRes';
 
 const router = express.Router();
 
@@ -8,5 +8,7 @@ router.get('/getgithub?:name',(req,res)=>{
         res.json(data)
     })
 })
+
+
 
 module.exports = router;
