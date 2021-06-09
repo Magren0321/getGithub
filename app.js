@@ -7,6 +7,7 @@ var app = express();
 
 
 app.all('*', (req, res, next) => {
+  req.setTimeout(10*1000)
   const { origin, Origin, referer, Referer } = req.headers;
   const allowOrigin = origin || Origin || referer || Referer || '*';
 	res.header("Access-Control-Allow-Origin", allowOrigin);

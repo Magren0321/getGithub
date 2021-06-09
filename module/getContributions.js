@@ -3,6 +3,7 @@
  */
 async function getContribution(name,browser){
     const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0); 
     await page.goto('https://github.com/'+name);
 
     const list =  await page.evaluate(()=>{
