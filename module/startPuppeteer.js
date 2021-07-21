@@ -18,10 +18,7 @@ async function getData(name){
 
     browser.close();
 
-    return {
-        dateList:contribution.dateList,
-        followers:contribution.followers
-    };
+    return contribution;
     
 }
 

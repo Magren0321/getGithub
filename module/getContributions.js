@@ -9,14 +9,14 @@ async function getContribution(name,browser){
     const list =  await page.evaluate(()=>{
         
         //获取followers数
-        const div = document.querySelectorAll('.mb-3 > a');
-        const reg = /followers/ //正则表达式，取有followers的字符串
-        let followers = undefined;
-        for(let i of div){
-            if(reg.test(i.href)){
-                followers = i.querySelector('span').outerText;
-            }
-        }
+        // const div = document.querySelectorAll('.mb-3 > a');
+        // const reg = /followers/ //正则表达式，取有followers的字符串
+        // let followers = undefined;
+        // for(let i of div){
+        //     if(reg.test(i.href)){
+        //         followers = i.querySelector('span').outerText;
+        //     }
+        // }
         
         //获取年份，以及对应contributions的url
         const year  = document.querySelectorAll(".filter-list > li > a");
@@ -27,15 +27,12 @@ async function getContribution(name,browser){
             }
         });
 
-        return {
-            yearList: yearlist,
-            followers: followers
-        };
+        return yearlist;
     })
 
     //获取每一年里每天的contributions情况
     const dateList = [];
-    for(let i of list.yearList){
+    for(let i of list){
         let date;
         await getDateList(i.href,page).then(res=>{date = res});
         dateList.push({
@@ -44,10 +41,7 @@ async function getContribution(name,browser){
         });
     }
 
-    return {
-        dateList:dateList,
-        followers:list.followers
-    }
+    return dateList;
 }
 
 //获取日期以及当天的提交数
