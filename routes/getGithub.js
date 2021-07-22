@@ -7,7 +7,10 @@ const router = express.Router();
 //爬取contributon
 router.get('/getAllContributions/:name',(req,res)=>{
     startPuppteer(req.params.name).then(data=>{
-        res.json(data);
+        res.json({
+            status:200,
+            data:data
+        });
     })
 })
 //使用github api获取个人信息
@@ -20,7 +23,10 @@ router.get('/getInfo/:name',(req,res)=>{
             });
             return;
         }
-        res.json(data.data);
+        res.json({
+            status:200,
+            data:data.data
+        });
     }).catch(e=>{
         res.json(e);
     })
@@ -28,7 +34,7 @@ router.get('/getInfo/:name',(req,res)=>{
 //使用github api获取仓库的contribution
 router.get('/getRepContributions/:name/:rep',(req,res)=>{
     axios.getRepContributions(req.params.name,req.params.rep).then(data=>{
-        if(info.status!==200){
+        if(data.status!==200){
             res.json({
                 status:info.status,
                 msg:info.data.msg
@@ -37,7 +43,10 @@ router.get('/getRepContributions/:name/:rep',(req,res)=>{
         }
         if(data.data){
             if(typeof JSON.parse(data.data)[0] !== 'undefined'){
-              res.json(JSON.parse(data.data)[0]);
+                res.json({
+                    status:200,
+                    data:JSON.parse(data.data)[0]
+                });
             }
         }
     }).catch(e=>{
@@ -79,7 +88,10 @@ router.get('/getRep/:name',(req,res)=>{
             });
         }
         console.log('请求完了');
-        res.json(arr);
+        res.json({
+            status:200,
+            data:arr
+        });
     }).catch(e=>{
         res.json(e);
     })
