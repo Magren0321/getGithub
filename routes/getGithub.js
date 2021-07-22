@@ -16,10 +16,10 @@ router.get('/getAllContributions/:name',(req,res)=>{
 //使用github api获取个人信息
 router.get('/getInfo/:name',(req,res)=>{
     axios.getInfo(req.params.name).then(data=>{
-        if(info.status!==200){
+        if(data.status!==200){
             res.json({
-                status:info.status,
-                msg:info.data.msg
+                status:data.status,
+                msg:data.data.msg
             });
             return;
         }
@@ -36,8 +36,8 @@ router.get('/getRepContributions/:name/:rep',(req,res)=>{
     axios.getRepContributions(req.params.name,req.params.rep).then(data=>{
         if(data.status!==200){
             res.json({
-                status:info.status,
-                msg:info.data.msg
+                status:data.status,
+                msg:data.data.msg
             });
             return;
         }
@@ -78,8 +78,8 @@ router.get('/getRep/:name',(req,res)=>{
                 console.log('第几页了？',pages);
                 if(data.status!==200){
                     res.json({
-                        status:info.status,
-                        msg:info.data.msg
+                        status:data.status,
+                        msg:data.data.msg
                     });
                     return;
                 }
