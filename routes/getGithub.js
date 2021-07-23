@@ -16,7 +16,7 @@ router.get('/getAllContributions/:name',(req,res)=>{
 //使用github api获取个人信息
 router.get('/getInfo/:name',(req,res)=>{
     axios.getInfo(req.params.name).then(data=>{
-        if(data.status!==200){
+        if(data.status < 200 || data.status >= 300){
             res.json({
                 status:data.status,
                 msg:data.data.msg
@@ -34,7 +34,7 @@ router.get('/getInfo/:name',(req,res)=>{
 //使用github api获取仓库的contribution
 router.get('/getRepContributions/:name/:rep',(req,res)=>{
     axios.getRepContributions(req.params.name,req.params.rep).then(data=>{
-        if(data.status!==200){
+        if(data.status < 200 || data.status >= 300){
             res.json({
                 status:data.status,
                 msg:data.data.msg
@@ -48,6 +48,11 @@ router.get('/getRepContributions/:name/:rep',(req,res)=>{
                     data:JSON.parse(data.data)[0]
                 });
             }
+        }else{
+            res.json({
+                status:200,
+                data:[]
+            })
         }
     }).catch(e=>{
         res.json(e);
@@ -60,7 +65,7 @@ router.get('/getRep/:name',(req,res)=>{
     let arr = []; //结果数组
     console.log('开始请求个人信息')
     axios.getInfo(req.params.name).then(info=>{
-        if(info.status!==200){
+        if(info.status < 200 || info.status >= 300){
             res.json({
                 status:info.status,
                 msg:info.data.msg
@@ -76,7 +81,7 @@ router.get('/getRep/:name',(req,res)=>{
             console.log('开始请求个人仓库')
             await axios.getRep(req.params.name,pages).then(data=>{
                 console.log('第几页了？',pages);
-                if(data.status!==200){
+                if(data.status < 200 || data.status >= 300){
                     res.json({
                         status:data.status,
                         msg:data.data.msg

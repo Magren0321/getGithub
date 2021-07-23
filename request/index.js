@@ -44,10 +44,12 @@ const showStatus = (status) => {
 
 const service = axios.create({
   withCredentials: false,
+  baseURL:'https://api.github.com',
   timeout: 30000, //超时时间
   headers: {
     get: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+      'Authorization':"token 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"
     },
     post: {
       'Content-Type': 'application/json;charset=utf-8'

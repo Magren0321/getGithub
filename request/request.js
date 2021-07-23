@@ -2,8 +2,6 @@ import axios from './index';
 
 //github api文档：https://docs.github.com/en/rest/reference/repos#list-organization-repositories
 
-const githubApi = 'https://api.github.com';
-
 const request = {
     /**
      * 获取github用户的个人信息
@@ -12,7 +10,7 @@ const request = {
      */
     getInfo(name){
         return axios({
-            url:githubApi+'/users/'+name,
+            url:'/users/'+name,
             method:'get'
         })
     },
@@ -24,7 +22,7 @@ const request = {
      */
     getRep(name,page){
         return axios({
-            url:githubApi+'/users/'+name+'/repos?page='+page+'&per_page=100',
+            url:'/users/'+name+'/repos?page='+page+'&per_page=100&sort=updated',
             method:'get'
         })
     },
@@ -36,7 +34,7 @@ const request = {
      */
     getRepContributions(userName,repName){
         return axios({
-            url:githubApi+'/repos/'+userName+'/'+repName+'/contributors',
+            url:'/repos/'+userName+'/'+repName+'/contributors',
             method:'get'
         })
     }
