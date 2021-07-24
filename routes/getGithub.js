@@ -47,11 +47,20 @@ router.get('/getRepContributions/:name/:rep',(req,res)=>{
                     status:200,
                     data:JSON.parse(data.data)[0]
                 });
+            }else{
+                res.json({
+                    status:200,
+                    data:{
+                        contributions:0
+                    }
+                })
             }
         }else{
             res.json({
                 status:200,
-                data:[]
+                data:{
+                    contributions:0
+                }
             })
         }
     }).catch(e=>{
