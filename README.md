@@ -3,6 +3,26 @@
 
 使用github api获取个人所有公开仓库以及每个仓库的contributions。
 
+## 注意
+Github api在没有授权直接访问的情况下，每个小时单IP限制60次，如果有授权的话没小时5000次，Github不允许将token上传到公开仓库，请自行在Github设置中生成个人token并将其放在axios的请求头中。
+
+示例：
+```js
+const service = axios.create({
+    baseURL:'https://api.github.com',
+    headers: {
+        get: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+        'Authorization':"token 这里粘贴生成的token"
+        },
+        post: {
+        'Content-Type': 'application/json;charset=utf-8'
+        }
+    },
+    …………………………
+)}
+```
+## 示例
 调用例子：
 > http://localhost:4000/getAllContributions/Magren0321
 

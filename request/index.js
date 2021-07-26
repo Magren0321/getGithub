@@ -49,7 +49,6 @@ const service = axios.create({
   headers: {
     get: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-      'Authorization':"token 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"
     },
     post: {
       'Content-Type': 'application/json;charset=utf-8'
