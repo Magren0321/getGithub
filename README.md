@@ -24,8 +24,18 @@ const service = axios.create({
 ```
 ## 示例
 调用例子：
-> http://localhost:4000/getAllContributions/Magren0321
 
-返回示例:  
+请求个人所有的contributions：
+> http://localhost:4000/getAllContributions/Magren0321  
 
-![](./img/test.png)
+请求个人信息：
+> http://localhost:4000/getInfo/Magren0321  
+
+请求个人仓库信息：
+> http://localhost:4000/getRep/Magren0321
+
+请求个人某个仓库的contribution信息：
+> http://localhost:4000/getRepContributions/Magren0321/getGithub
+
+# 最后
+感谢[Github api](https://docs.github.com/en/rest/reference/repos#list-organization-repositories)

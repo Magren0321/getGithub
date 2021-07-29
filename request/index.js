@@ -48,7 +48,7 @@ const service = axios.create({
   timeout: 30000, //超时时间
   headers: {
     get: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
     },
     post: {
       'Content-Type': 'application/json;charset=utf-8'

@@ -46,6 +46,7 @@ async function getContribution(name,browser){
 
 //获取日期以及当天的提交数
 async function getDateList(yearData,page){
+    console.log('开始去爬取' + yearData + '的contribution啦')
     await page.goto(yearData);
     const dateList = await page.evaluate(()=>{
         const date = document.querySelectorAll('.ContributionCalendar-day');
